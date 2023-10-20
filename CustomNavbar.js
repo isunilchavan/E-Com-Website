@@ -1,6 +1,15 @@
-import { Navbar, Nav, Badge } from 'react-bootstrap';
+import React from "react";
+import { Navbar, Nav, Badge } from "react-bootstrap";
+import { useCart } from "./CartContext";
 
-function CustomNavbar({ onShowCart, itemCount }) {
+function CustomNavbar({ onShowCart }) {
+  const { state } = useCart();
+
+  const itemCount = state.cartItems.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
+
   return (
     <Navbar expand="lg" bg="dark" variant="dark">
       <Navbar.Brand href="#home">Home</Navbar.Brand>
@@ -10,7 +19,7 @@ function CustomNavbar({ onShowCart, itemCount }) {
       </Nav>
       <Nav>
         <Nav.Link onClick={onShowCart} className="btn btn-primary">
-          <i className="fas fa-shopping-cart"></i> Cart{' '}
+          <i className="fas fa-shopping-cart"></i> Cart{" "}
           <Badge bg="secondary">{itemCount}</Badge>
         </Nav.Link>
       </Nav>

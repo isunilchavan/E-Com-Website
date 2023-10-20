@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { useCart } from "./CartContext";
 
 const productsArr = [
   {
@@ -23,15 +24,25 @@ const productsArr = [
     imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%204.png",
   },
 ];
-
 function ProductCard({ title, price, imageUrl }) {
+  const { dispatch } = useCart(); // Use the useCart hook to access the dispatch function.
+
+  const addToCart = (product) => {
+    dispatch({ type: "ADD_TO_CART", payload: product });
+  };
+
   return (
     <Card style={{ width: "18rem" }}>
       <Card.Img variant="top" src={imageUrl} />
       <Card.Body>
         <Card.Title>{title}</Card.Title>
         <Card.Text>Price: ${price}</Card.Text>
-        <Button variant="primary">Add to Cart</Button>
+        <Button
+          variant="primary"
+          onClick={() => addToCart({ title, price, imageUrl })}
+        >
+          Add to Cart
+        </Button>
       </Card.Body>
     </Card>
   );
