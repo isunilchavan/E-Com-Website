@@ -1,8 +1,7 @@
 import React from "react";
 import { Navbar, Nav, Badge } from "react-bootstrap";
 import { useCart } from "./CartContext";
-import { Link } from "react-router-dom";
-
+import { NavLink } from "react-router-dom";
 
 function CustomNavbar({ onShowCart }) {
   const { state } = useCart();
@@ -14,10 +13,10 @@ function CustomNavbar({ onShowCart }) {
 
   return (
     <Navbar expand="lg" bg="dark" variant="dark">
-      <Navbar.Brand href="#home">Home</Navbar.Brand>
+      <Navbar.Brand as={NavLink} to="/">Home</Navbar.Brand>
       <Nav className="me-auto">
-      <Nav.Link as={Link} to="/about">About</Nav.Link>
-        <Nav.Link href="#store">Store</Nav.Link>
+        <Nav.Link as={NavLink} to="/about">About</Nav.Link>
+        <Nav.Link as={NavLink} to="/store">Store</Nav.Link>
       </Nav>
       <Nav>
         <Nav.Link onClick={onShowCart} className="btn btn-primary">

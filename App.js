@@ -4,8 +4,9 @@ import Products from "./components/Products";
 import CustomNavbar from "./components/CustomNavbar";
 import Cart from "./components/Cart";
 import { CartProvider } from "./components/CartContext";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom"; // Import the 'Routes' component instead of 'Switch'
+import { BrowserRouter as Router, Route,  Routes } from "react-router-dom";
 import About from "./components/About";
+import Home from "./components/Home"; // Import the Home component
 
 function App() {
   const [showCart, setShowCart] = useState(false);
@@ -23,10 +24,11 @@ function App() {
       <Router>
         <Container>
           <CustomNavbar onShowCart={handleShowCart} />
-          <h1>E-Commerce Website</h1>
+          <h2>E-Commerce Website</h2>
           <Routes>
-            <Route path="/about" element={<About />} /> {/* Use 'element' to define the component */}
-            <Route path="/" element={<Products />} /> {/* Use 'element' to define the component */}
+            <Route path="/about" element={<About />} />
+            <Route path="/" element={<Home />} /> {/* Use 'element' to define the component */}
+            <Route path="/store" element={<Products />} />
           </Routes>
           <Cart showCart={showCart} onClose={handleCloseCart} />
         </Container>
