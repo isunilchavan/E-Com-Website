@@ -1,44 +1,41 @@
-import React, { createContext, useContext, useEffect, useReducer } from "react";
-;
+
+import React, { createContext, useContext, useReducer, useEffect } from "react";
 
 const CartContext = createContext();
 
 const initialState = {
-  cartItems: [],
+  cartItems: JSON.parse(localStorage.getItem("cart")) || [],
 };
 
 const cartReducer = (state, action) => {
   switch (action.type) {
     case "ADD_TO_CART":
       const newItem = action.payload;
-      const existingItem = state.cartItems.find(
+      const existingItemIndex = state.cartItems.findIndex(
         (item) => item.title === newItem.title
       );
 
-      if (existingItem) {
-        const updatedCart = state.cartItems.map((item) =>
-          item.title === newItem.title
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
+      if (existingItemIndex !== -1) {
+        const updatedCart = [...state.cartItems];
+        updatedCart[existingItemIndex].quantity += 1;
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
         return { ...state, cartItems: updatedCart };
       } else {
-        return {
-          ...state,
-          cartItems: [...state.cartItems, { ...newItem, quantity: 1 }],
-        };
+        const updatedCart = [...state.cartItems, { ...newItem, quantity: 1 }];
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
+        return { ...state, cartItems: updatedCart };
       }
 
     case "REMOVE_FROM_CART":
       const index = action.payload;
       const updatedCart = [...state.cartItems];
       updatedCart.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
       return { ...state, cartItems: updatedCart };
 
-      case "SET_TOKEN":
-      // Set the user's token in the state
-      return { ...state, token: action.payload };
-
+    case "CLEAR_CART":
+      localStorage.removeItem("cart");
+      return { ...state, cartItems: [] };
 
     default:
       return state;
@@ -48,17 +45,14 @@ const cartReducer = (state, action) => {
 export const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, initialState);
 
-  // Add useEffect to handle token storage
+  // Load cart data from localStorage
   useEffect(() => {
-    // Get the token from local storage, if it exists
-    const token = localStorage.getItem("token");
-
-    if (token) {
-      // Update your context state with the token
-      // You can store it in state or a separate token state
-      // Example: setToken(token);
+    const storedCart = JSON.parse(localStorage.getItem("cart"));
+    if (storedCart) {
+      dispatch({ type: "SET_CART", payload: storedCart });
     }
   }, []);
+
   return (
     <CartContext.Provider value={{ state, dispatch }}>
       {children}

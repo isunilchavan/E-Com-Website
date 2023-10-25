@@ -1,3 +1,5 @@
+// Cart.js
+
 import React from "react";
 import { Modal, Button, ListGroup, Image } from "react-bootstrap";
 import { useCart } from "./CartContext";
@@ -8,6 +10,10 @@ function Cart({ showCart, onClose }) {
 
   function handleRemoveItem(index) {
     dispatch({ type: "REMOVE_FROM_CART", payload: index });
+  }
+
+  function handleClearCart() {
+    dispatch({ type: "CLEAR_CART" });
   }
 
   return (
@@ -37,6 +43,11 @@ function Cart({ showCart, onClose }) {
           ))}
         </ListGroup>
       </Modal.Body>
+      <Modal.Footer>
+        <Button variant="danger" onClick={handleClearCart}>
+          Clear Cart
+        </Button>
+      </Modal.Footer>
     </Modal>
   );
 }

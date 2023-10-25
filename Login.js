@@ -12,7 +12,7 @@ function Login() {
     // Send a request to your backend to validate the email and password
     try {
       const response = await fetch(
-        "https:identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyBT973fCDNn8x1looa46PWlQ-dv2mK1p7k",
+        "https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyBT973fCDNn8x1looa46PWlQ-dv2mK1p7k",
         {
           method: "POST",
           headers: {
@@ -22,10 +22,7 @@ function Login() {
         }
       );
 
-      if (response.ok) {
-        // Login was successful
-        const data = await response.json();
-      } else {
+      if (!response.ok) {
         setError("Invalid email or password. Please try again.");
       }
     } catch (error) {

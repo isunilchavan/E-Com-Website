@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar, Nav, Badge } from "react-bootstrap";
+import { Navbar, Nav, Badge, Button } from "react-bootstrap";
 import { useCart } from "./CartContext";
 import { NavLink } from "react-router-dom";
 
@@ -10,6 +10,11 @@ function CustomNavbar({ onShowCart }) {
     (total, item) => total + item.quantity,
     0
   );
+
+  // Assuming you have a handleLogout function
+  const handleLogout = () => {
+    // Implement your logout logic here
+  };
 
   return (
     <Navbar expand="lg" bg="dark" variant="dark" fixed="top">
@@ -28,6 +33,17 @@ function CustomNavbar({ onShowCart }) {
         </Nav.Link>
       </Nav>
       <Nav>
+        {state.token ? (
+          // Display a "Log Out" button if the user is authenticated
+          <Button variant="danger" onClick={handleLogout}>
+            Log Out
+          </Button>
+        ) : (
+          // Display a "Log In" link if the user is not authenticated
+          <Nav.Link as={NavLink} to="/login">
+            Log In
+          </Nav.Link>
+        )}
         <Nav.Link onClick={onShowCart} className="btn btn-primary">
           <i className="fas fa-shopping-cart"></i> Cart{" "}
           <Badge bg="secondary">{itemCount}</Badge>

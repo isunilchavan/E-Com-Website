@@ -1,11 +1,19 @@
 // Footer.js
 import React from "react";
 import { Container } from "react-bootstrap";
-import { FaYoutube, FaSpotify, FaFacebook } from 'react-icons/fa';
+import { FaYoutube, FaSpotify, FaFacebook } from "react-icons/fa";
 
 function Footer() {
   return (
-    <footer className="text-white mt-4 py-3" style={{ position: "relative", bottom: 0, width: "100%", backgroundColor: '#0e5f12' }}>
+    <footer
+      className="text-white mt-3 py-3"
+      style={{
+        position: "relative",
+        bottom: 0,
+        width: "100%",
+        backgroundColor: "#0e5f12",
+      }}
+    >
       <Container>
         <div className="d-flex justify-content-center">
           <a href="https://www.youtube.com/" className="text-white me-3">

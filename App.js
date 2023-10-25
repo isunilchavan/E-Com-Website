@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState } from "react";
 import { Container } from "react-bootstrap";
 import Products from "./components/Products";
 import ProductDetails from "./components/ProductDetails";
