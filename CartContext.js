@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useReducer } from "react";
+import React, { createContext, useContext, useEffect, useReducer } from "react";
+;
 
 const CartContext = createContext();
 
@@ -34,6 +35,11 @@ const cartReducer = (state, action) => {
       updatedCart.splice(index, 1);
       return { ...state, cartItems: updatedCart };
 
+      case "SET_TOKEN":
+      // Set the user's token in the state
+      return { ...state, token: action.payload };
+
+
     default:
       return state;
   }
@@ -42,6 +48,17 @@ const cartReducer = (state, action) => {
 export const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, initialState);
 
+  // Add useEffect to handle token storage
+  useEffect(() => {
+    // Get the token from local storage, if it exists
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      // Update your context state with the token
+      // You can store it in state or a separate token state
+      // Example: setToken(token);
+    }
+  }, []);
   return (
     <CartContext.Provider value={{ state, dispatch }}>
       {children}
